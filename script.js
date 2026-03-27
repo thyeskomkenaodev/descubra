@@ -44,6 +44,24 @@ createStars();
 // 2. Interaction Logic & Scene Sequence
 const characterContainer = document.getElementById('characterContainer');
 const giftWrapper = document.getElementById('giftWrapper');
+const music = document.getElementById('birthdayMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicIcon = document.getElementById('musicIcon');
+
+let isMusicPlaying = false;
+
+musicToggle.addEventListener('click', () => {
+    if (isMusicPlaying) {
+        music.pause();
+        musicIcon.src = 'https://img.icons8.com/ios-filled/50/ffffff/mute--v1.png';
+        musicToggle.classList.add('muted');
+    } else {
+        music.play();
+        musicIcon.src = 'https://img.icons8.com/ios-filled/50/ffffff/high-volume--v1.png';
+        musicToggle.classList.remove('muted');
+    }
+    isMusicPlaying = !isMusicPlaying;
+});
 
 function startIntroduction() {
     // 1. Initial state (off-screen)
@@ -80,6 +98,12 @@ giftWrapper.addEventListener('click', () => {
     if (!giftWrapper.classList.contains('open')) {
         giftWrapper.classList.add('open');
         
+        // Start Music on first interaction
+        if (!isMusicPlaying) {
+            music.play().catch(e => console.log("Erro ao tocar música:", e));
+            isMusicPlaying = true;
+        }
+
         // Surprise: Floating Hearts
         createHearts();
 

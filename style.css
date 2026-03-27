@@ -647,6 +647,42 @@ body {
     100% { transform: translate(0, 0) rotate(360deg); }
 }
 
+
+/* Music Toggle Styles */
+.music-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: rgba(212, 175, 55, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.music-toggle:hover {
+    background: rgba(212, 175, 55, 0.6);
+    transform: scale(1.1);
+}
+
+.music-toggle img {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.music-toggle.muted {
+    background: rgba(44, 62, 80, 0.5);
+}
+
 @media (max-width: 480px) {
     .envelope.open .envelope-letter {
         width: 90vw;
