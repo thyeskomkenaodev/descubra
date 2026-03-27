@@ -1,0 +1,659 @@
+:root {
+    --primary-color: #f7cac9; /* Rose Quartz */
+    --secondary-color: #92a8d1; /* Serenity */
+    --gold: #d4af37;
+    --rose-gold: #b76e79;
+    --cream: #fff5e1;
+    --dark: #2c3e50;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark);
+}
+
+/* Base Containers */
+.main-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#fireworksCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Delivery Scene Styles */
+.delivery-scene {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* Butterfly Scene Styles */
+.butterfly-container {
+    position: absolute;
+    left: -150px;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    z-index: 15;
+    transition: left 4s linear, top 4s ease-in-out;
+}
+
+.butterfly-img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 15px rgba(255, 255, 255, 0.4));
+    animation: flap 0.2s infinite alternate ease-in-out;
+}
+
+.butterfly-container.flying {
+    animation: flight-path 4s infinite linear;
+}
+
+@keyframes flap {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0.4); }
+}
+
+@keyframes flight-path {
+    0% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-30px) rotate(-10deg); }
+    50% { transform: translateY(0) rotate(0); }
+    75% { transform: translateY(30px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+
+.magic-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.butterfly-container.arrived .magic-glow {
+    opacity: 1;
+}
+
+.butterfly-container.free {
+    animation: free-flight 15s infinite ease-in-out;
+    transition: all 2s ease-in-out;
+}
+
+@keyframes free-flight {
+    0% { left: 40%; top: 50%; transform: rotate(0); }
+    20% { left: 80%; top: 20%; transform: rotate(20deg); }
+    40% { left: 10%; top: 10%; transform: rotate(-15deg); }
+    60% { left: 70%; top: 70%; transform: rotate(10deg); }
+    80% { left: 20%; top: 80%; transform: rotate(-20deg); }
+    100% { left: 40%; top: 50%; transform: rotate(0); }
+}
+
+/* Gift Transition */
+/* (Handover logic handled by JS) */
+
+/* Gift Styling (Refined for character) */
+.gift-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.5s ease;
+}
+
+.gift-wrapper.hidden {
+    opacity: 0;
+    transform: translate(0, -50%) scale(0.2); /* Start small next to character */
+    pointer-events: none;
+}
+
+.gift-wrapper.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.gift-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gift-img {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+}
+
+/* Letter Content */
+.envelope-letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 0;
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.gift-wrapper.open .envelope-letter {
+    height: auto;
+    min-height: 500px;
+    padding: 40px;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 20;
+    overflow: visible;
+}
+
+.letter-content {
+    opacity: 0;
+    transition: opacity 0.5s ease 0.5s;
+    text-align: center;
+}
+
+.gift-wrapper.open .letter-content {
+    opacity: 1;
+}
+
+/* Photo Frame Styles */
+.photo-frame {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    padding: 5px;
+    background: linear-gradient(45deg, var(--rose-gold), var(--gold));
+    box-shadow: 0 0 20px rgba(183, 110, 121, 0.4);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 1s ease 0.8s;
+}
+
+.gift-wrapper.open .photo-frame {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+.photo-glow {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { transform: scale(1); opacity: 0.5; }
+    to { transform: scale(1.1); opacity: 0.8; }
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--rose-gold);
+    margin-bottom: 5px;
+}
+
+/* Tribute Section */
+.tribute-section {
+    background: rgba(183, 110, 121, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--rose-gold);
+    text-align: left;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 1s ease 1.5s;
+}
+
+.gift-wrapper.open .tribute-section {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.tribute-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--rose-gold);
+    margin-bottom: 10px;
+}
+
+.tribute-section p {
+    font-size: 0.85rem;
+    color: var(--dark);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    color: var(--rose-gold);
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 100;
+    animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Number Transition Animation */
+.number-transition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+}
+
+.number-wrapper {
+    position: relative;
+    height: 60px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 1.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+/* .gift-wrapper.open .number-wrapper {
+    transform: translateY(-60px);
+} */
+
+.old-number, .new-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    height: 60px;
+    line-height: 60px;
+    color: var(--rose-gold);
+    font-family: 'Playfair Display', serif;
+}
+
+.age-label {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* Mini Cake Ornament */
+.mini-cake-ornament {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.mini-cake-img {
+    width: 50px;
+    height: auto;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+
+.message-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.signature {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--rose-gold);
+}
+
+.instruction {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 1s ease;
+    animation: breathe 2s infinite ease-in-out;
+}
+
+@keyframes breathe {
+    0%, 100% { opacity: 0.5; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Celebration Overlay */
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.birthday-title {
+    margin-top: 30px;
+    text-align: center;
+    color: white;
+    animation: fadeInScale 1s ease-out forwards;
+}
+
+.birthday-title .name {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(247, 202, 201, 0.5);
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.status-num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    transition: all 0.8s ease;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.8s ease;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--rose-gold), var(--gold));
+    box-shadow: 0 0 10px var(--gold);
+    transition: width 2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Final State Classes */
+.status-container.finished .old,
+.status-container.finished .progress-bar {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    margin: 0;
+}
+
+.status-container.finished .new {
+    font-size: 5rem;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+    transform: scale(1.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.primaveras-tag {
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: all 1s ease 0.5s;
+    margin-top: -10px;
+}
+
+.status-container.finished .primaveras-tag {
+    opacity: 1;
+}
+
+.age-transition {
+    display: none; 
+}
+
+/* New Cake Styling */
+.cake-container {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cake-container:hover {
+    transform: scale(1.1);
+}
+
+.cake-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-cake-img {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+.candle {
+    position: absolute;
+    width: 4px;
+    height: 10px;
+    top: 25px; /* Positioned at the top of the cake image */
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent; /* Candle body is part of the image, we just need the flame point */
+}
+
+.flame {
+    position: absolute;
+    background: orange;
+    width: 10px;
+    height: 15px;
+    border-radius: 50% 50% 20% 20%;
+    top: -15px;
+    left: -3px;
+    box-shadow: 0 0 10px orange, 0 0 20px yellow;
+    animation: flicker 0.1s infinite alternate;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1) rotate(-1deg); }
+    100% { transform: scale(1.1) rotate(1deg); }
+}
+
+.cake-instruction {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    width: 300px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive adjustments */
+
+/* Flower and Butterfly Forest Styles */
+.flower-forest, .butterfly-forest {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 90;
+}
+
+.flower-forest {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.flower-item {
+    position: absolute;
+    bottom: -10px;
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s ease;
+    opacity: 0;
+}
+
+.flower-item.visible {
+    opacity: 1;
+}
+
+.flower-item img {
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+    animation: sway 3s infinite alternate ease-in-out;
+}
+
+@keyframes sway {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+}
+
+.butterfly-item {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.butterfly-item.visible {
+    opacity: 1;
+}
+
+.butterfly-item img {
+    width: 100%;
+    height: auto;
+    animation: flap-fast 0.15s infinite alternate ease-in-out;
+}
+
+@keyframes flap-fast {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0.3); }
+}
+
+.butterfly-item.orbiting {
+    animation: orbit 10s infinite linear;
+}
+
+@keyframes orbit {
+    0% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(100px, -50px) rotate(90deg); }
+    50% { transform: translate(0, -100px) rotate(180deg); }
+    75% { transform: translate(-100px, -50px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+    .envelope.open .envelope-letter {
+        width: 90vw;
+        height: 70vh;
+        overflow-y: auto;
+    }
+    .birthday-title .name {
+        font-size: 2rem;
+    }
+}

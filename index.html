@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário Lucimara!</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="stars-container" id="starsContainer"></div>
+    <canvas id="fireworksCanvas"></canvas>
+
+    <div class="main-container">
+        <!-- Delivery Scene Section -->
+        <div class="delivery-scene" id="deliveryScene">
+            <div class="butterfly-container" id="characterContainer">
+                <img src="https://img.icons8.com/plasticine/100/butterfly.png" alt="Borboleta" class="butterfly-img" id="butterflyImg">
+                <div class="magic-glow"></div>
+            </div>
+            
+            <!-- Gift Section (Revealed by Butterfly) -->
+            <div class="gift-wrapper hidden" id="giftWrapper">
+                <div class="envelope-letter" id="letter">
+                    <div class="letter-content">
+                        <div class="photo-frame">
+                            <img src="lucimara.jpg" alt="Lucimara Fernandes" id="lucimaraPhoto">
+                        </div>
+
+                        <h1 class="title">Querida Lucimara,</h1>
+
+                        <div class="number-transition">
+                            <div class="number-wrapper">
+                                <span class="old-number">40</span>
+                                <span class="new-number">41</span>
+                            </div>
+                            <div class="age-label">anos de brilho</div>
+                        </div>
+
+                        <p class="message-text">
+                            Hoje celebramos uma marca extraordinária! <br>
+                            De luz, sabedoria e beleza.
+                        </p>
+
+                        <div class="tribute-section">
+                            <h3>Por que você é tão especial?</h3>
+                            <p>Sua presença ilumina qualquer ambiente, seu sorriso é contagiante e sua força é uma
+                                inspiração para todos nós. Que este novo ano de vida lhe retribua toda a alegria que
+                                você espalha pelo mundo!</p>
+                        </div>
+
+                        <div class="mini-cake-ornament">
+                            <img src="https://img.icons8.com/3d-fluency/94/birthday-cake.png" alt="Bolo"
+                                class="mini-cake-img">
+                        </div>
+
+                        <div class="letter-footer">
+                            <p>Com todo carinho,</p>
+                            <p class="signature">Feliz Aniversário!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="instruction">Toque no presente para ver sua surpresa</div>
+            </div>
+
+            <!-- Celebration Overlay (Cake & Fireworks) -->
+            <div class="celebration-overlay" id="celebrationOverlay">
+                <div class="cake-container" id="cakeContainer">
+                    <div class="cake-wrapper">
+                        <img src="https://img.icons8.com/3d-fluency/94/birthday-cake.png" alt="Bolo de Aniversário"
+                            class="main-cake-img">
+                        <div class="candle" id="candle">
+                            <div class="flame" id="flame"></div>
+                        </div>
+                    </div>
+                    <div class="cake-instruction">Faça um pedido e apague a vela! (Clique)</div>
+                </div>
+
+                <div class="birthday-title" id="birthdayTitle">
+                    <span class="name">Lucimara Fernandes</span>
+                    <div class="status-container" id="statusContainer">
+                        <span class="status-num old">40</span>
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="status-num new" id="newAge">41 <small
+                                class="primaveras-tag">primaveras</small></span>
+                    </div>
+                </div>
+                <div id="flowerForest" class="flower-forest"></div>
+                <div id="butterflyForest" class="butterfly-forest"></div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+</body>
+
+</html>
